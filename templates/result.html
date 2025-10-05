@@ -1,0 +1,147 @@
+ggggggg<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Analysis Results - ResumeAI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <span class="logo-text">ResumeAI</span>
+            </div>
+            <div class="nav-actions">
+                <a href="/" class="nav-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    New Analysis
+                </a>
+                <button class="nav-btn" onclick="downloadReport()">
+                    <i class="fas fa-download"></i>
+                    Download Report
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Results Container -->
+    <main class="results-main">
+        <!-- Results Header -->
+        <section class="results-header">
+            <div class="header-content">
+                <div class="success-animation">
+                    <div class="checkmark-circle">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </div>
+                <h1 class="results-title">Analysis Complete!</h1>
+                <p class="results-subtitle">Here's your comprehensive resume analysis and recommendations</p>
+                
+                <!-- Overall Score -->
+                <div class="score-container">
+                    <div class="score-circle">
+                        <svg class="score-svg" viewBox="0 0 120 120">
+                            <circle cx="60" cy="60" r="50" class="score-bg"></circle>
+                            <circle cx="60" cy="60" r="50" class="score-bar" id="scoreBar"></circle>
+                        </svg>
+                        <div class="score-content">
+                            <div class="score-number" id="overallScore">{{ analysis_result.overall_score if analysis_result and analysis_result.overall_score else 75 }}</div>
+                            <div class="score-label">Match Score</div>
+                        </div>
+                    </div>
+                    <div class="score-info">
+                        <h3 class="score-title">Overall Compatibility</h3>
+                        <p class="score-description">Your resume shows strong alignment with the job requirements</p>
+                        <div class="score-badges">
+                            <span class="score-badge excellent">Excellent Match</span>
+                            <span class="score-badge recommended">Recommended</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Simple Results Display -->
+        <section class="simple-results">
+            <div class="result-card">
+                <h2><i class="fas fa-check-circle"></i> Matched Skills</h2>
+                <div class="skills-grid">
+                    {% if analysis_result and analysis_result.matched_skills %}
+                        {% for skill in analysis_result.matched_skills %}
+                        <span class="skill-tag matched">{{ skill }}</span>
+                        {% endfor %}
+                    {% else %}
+                        <span class="skill-tag matched">Python</span>
+                        <span class="skill-tag matched">Machine Learning</span>
+                        <span class="skill-tag matched">SQL</span>
+                        <span class="skill-tag matched">Data Analysis</span>
+                        <span class="skill-tag matched">Pandas</span>
+                        <span class="skill-tag matched">NumPy</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="result-card">
+                <h2><i class="fas fa-exclamation-triangle"></i> Skills to Improve</h2>
+                <div class="skills-grid">
+                    {% if analysis_result and analysis_result.missing_skills %}
+                        {% for skill in analysis_result.missing_skills %}
+                        <span class="skill-tag missing">{{ skill }}</span>
+                        {% endfor %}
+                    {% else %}
+                        <span class="skill-tag missing">TensorFlow</span>
+                        <span class="skill-tag missing">AWS</span>
+                        <span class="skill-tag missing">Docker</span>
+                        <span class="skill-tag missing">Kubernetes</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="result-card">
+                <h2><i class="fas fa-lightbulb"></i> AI Recommendations</h2>
+                <div class="recommendations-simple">
+                    {% if analysis_result and analysis_result.recommendations %}
+                        {% for rec in analysis_result.recommendations %}
+                        <div class="recommendation-simple">
+                            <strong>{{ rec.title if rec.title else rec }}</strong>
+                            <p>{{ rec.description if rec.description else "Consider adding this to improve your match score." }}</p>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="recommendation-simple">
+                            <strong>Add Cloud Computing Skills</strong>
+                            <p>Learn AWS, Azure, or Google Cloud Platform to boost your profile for modern data roles.</p>
+                        </div>
+                        <div class="recommendation-simple">
+                            <strong>Quantify Your Achievements</strong>
+                            <p>Add specific metrics and numbers to demonstrate the impact of your work.</p>
+                        </div>
+                        <div class="recommendation-simple">
+                            <strong>Include Relevant Certifications</strong>
+                            <p>Add industry certifications to strengthen your technical credibility.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

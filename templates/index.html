@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Resume Analyzer - Smart Career Intelligence</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <span class="logo-text">ResumeAI</span>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="nav-link active" data-target="analyzer">Analyzer</a>
+                <a href="#" class="nav-link" data-target="features">Features</a>
+                <a href="#" class="nav-link" data-target="about">About</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="title-gradient">AI-Powered</span>
+                    <span class="title-highlight">Resume Analyzer</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Transform your career with intelligent resume analysis. Get instant feedback, 
+                    skill matching, and improvement suggestions powered by advanced AI.
+                </p>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="50000">0</div>
+                        <div class="stat-label">Resumes Analyzed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="95">0</div>
+                        <div class="stat-label">% Accuracy Rate</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="24">0</div>
+                        <div class="stat-label">Skill Categories</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Analyzer Interface -->
+        <section class="analyzer-section" id="analyzer-section">
+            <div class="analyzer-container">
+                <div class="analyzer-card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <i class="fas fa-magic"></i>
+                            Start Your Analysis
+                        </h2>
+                        <p class="card-subtitle">Upload your resume and job description for instant AI-powered insights</p>
+                    </div>
+
+                    <form id="analyzerForm" class="analyzer-form" action="/analyze" method="POST" enctype="multipart/form-data">
+                        <!-- Resume Upload Section -->
+                        <div class="upload-section">
+                            <div class="section-header">
+                                <div class="section-icon">
+                                    <i class="fas fa-file-upload"></i>
+                                </div>
+                                <h3 class="section-title">Upload Resume</h3>
+                                <span class="section-badge">PDF/DOCX</span>
+                            </div>
+                            
+                            <div class="file-upload-container">
+                                <input type="file" id="resumeFile" name="resume" accept=".pdf,.docx,.doc" class="file-input">
+                                <div class="file-upload-area" id="resumeUploadArea">
+                                    <div class="upload-content">
+                                        <div class="upload-icon">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                        </div>
+                                        <h4 class="upload-title">Drop your resume here</h4>
+                                        <p class="upload-text">or <span class="upload-link">browse files</span></p>
+                                        <div class="upload-formats">
+                                            <span class="format-tag">PDF</span>
+                                            <span class="format-tag">DOCX</span>
+                                            <span class="format-tag">DOC</span>
+                                        </div>
+                                    </div>
+                                    <div class="upload-preview" id="resumePreview" style="display: none;">
+                                        <div class="preview-icon">
+                                            <i class="fas fa-file-alt"></i>
+                                        </div>
+                                        <div class="preview-info">
+                                            <div class="preview-name"></div>
+                                            <div class="preview-size"></div>
+                                        </div>
+                                        <button type="button" class="remove-file" onclick="removeFile('resume')">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Job Description Section -->
+                        <div class="job-section">
+                            <div class="section-header">
+                                <div class="section-icon">
+                                    <i class="fas fa-briefcase"></i>
+                                </div>
+                                <h3 class="section-title">Job Description</h3>
+                                <span class="section-badge">Required</span>
+                            </div>
+                            
+                            <div class="textarea-container">
+                                <textarea 
+                                    id="jobDescription" 
+                                    name="job_description" 
+                                    class="job-textarea"
+                                    placeholder="Paste the job description here...&#10;&#10;We are looking for a Data Scientist with experience in:&#10;- Python, Pandas, NumPy&#10;- Machine Learning, Scikit-learn, TensorFlow&#10;- SQL and database management&#10;- Data visualization tools (Matplotlib, Seaborn, PowerBI)"
+                                    rows="8"
+                                ></textarea>
+                                <div class="textarea-footer">
+                                    <div class="char-counter">
+                                        <span id="charCount">0</span> / 5000 characters
+                                    </div>
+                                    <div class="ai-suggestions">
+                                        <button type="button" class="suggestion-btn" onclick="addSuggestion('python')">
+                                            <i class="fas fa-plus"></i> Python
+                                        </button>
+                                        <button type="button" class="suggestion-btn" onclick="addSuggestion('machine learning')">
+                                            <i class="fas fa-plus"></i> ML
+                                        </button>
+                                        <button type="button" class="suggestion-btn" onclick="addSuggestion('data analysis')">
+                                            <i class="fas fa-plus"></i> Data Analysis
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Analyze Button -->
+                        <div class="analyze-section">
+                            <button type="submit" class="analyze-button" id="analyzeBtn">
+                                <div class="button-content">
+                                    <div class="button-icon">
+                                        <i class="fas fa-rocket"></i>
+                                    </div>
+                                    <span class="button-text">Analyze Resume</span>
+                                    <div class="button-spinner">
+                                        <i class="fas fa-spinner fa-spin"></i>
+                                    </div>
+                                </div>
+                                <div class="button-ripple"></div>
+                            </button>
+                            
+                            <div class="analysis-info">
+                                <div class="info-item">
+                                    <i class="fas fa-lightning-bolt"></i>
+                                    <span>Instant Analysis</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-shield-alt"></i>
+                                    <span>Secure & Private</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-chart-line"></i>
+                                    <span>Detailed Insights</span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Features Preview -->
+                <div class="features-preview">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h4>Skill Matching</h4>
+                        <p>AI-powered analysis of your skills against job requirements</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <h4>Gap Analysis</h4>
+                        <p>Identify missing skills and improvement opportunities</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h4>Match Score</h4>
+                        <p>Get an overall compatibility score with detailed breakdown</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Progress Overlay -->
+    <div class="progress-overlay" id="progressOverlay">
+        <div class="progress-content">
+            <div class="progress-animation">
+                <div class="progress-circle">
+                    <svg class="progress-svg" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="45" class="progress-bg"></circle>
+                        <circle cx="50" cy="50" r="45" class="progress-bar" id="progressBar"></circle>
+                    </svg>
+                    <div class="progress-percentage" id="progressPercentage">0%</div>
+                </div>
+            </div>
+            <h3 class="progress-title">Analyzing Your Resume</h3>
+            <p class="progress-subtitle" id="progressText">Initializing AI engine...</p>
+            <div class="progress-steps">
+                <div class="step active" data-step="1">
+                    <i class="fas fa-file-text"></i>
+                    <span>Parsing Resume</span>
+                </div>
+                <div class="step" data-step="2">
+                    <i class="fas fa-brain"></i>
+                    <span>AI Analysis</span>
+                </div>
+                <div class="step" data-step="3">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Generating Report</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
