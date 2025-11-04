@@ -234,7 +234,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Your Name**
 - GitHub: [@yourusername](https://github.com/arunesh-123at)
-- LinkedIn: [Your LinkedIn](https://linkedin.com/in/yourprofile)
+- LinkedIn: [Your LinkedIn](https://www.linkedin.com/in/arunesh-tulya-685026286?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app)
 - Email: mohit.mtpatna123@gmail.com
 
 ## 🙏 Acknowledgments
